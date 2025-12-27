@@ -1,7 +1,7 @@
 resource "docker_image" "php-httpd-image" {
   name = "php-httpd:challenge"
   build {
-    path       = "${path.module}/lamp_stack/php_httpd"
+    path       = "${path.module}/php_httpd"
     dockerfile = "Dockerfile"
     label = {
       challenge = "second"
@@ -13,7 +13,7 @@ resource "docker_image" "php-httpd-image" {
 resource "docker_image" "mariadb-image" {
   name = "mariadb:challenge"
   build {
-    path       = "${path.module}/lamp_stack/custom_db"
+    path       = "${path.module}/custom_db"
     dockerfile = "Dockerfile"
     label = {
       challenge = "second"
@@ -41,7 +41,7 @@ resource "docker_container" "php-httpd" {
     value = "second"
   }
   volumes {
-    host_path      = "/root/code/terraform-challenges/challenge2/lamp_stack/website_content/"
+    host_path      = abspath("${path.module}/website_content")
     container_path = "/var/www/html"
   }
   ports {
